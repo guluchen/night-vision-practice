@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>夜間視野模擬練習</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>夜間視野模擬練習</h1>
+      <p class="disclaimer">僅供熟悉測驗形式，不代表正式體檢結果。若眼睛不適請立即停止。</p>
+    </header>
+
+    <section class="controls card">
+      <label>模式
+        <select id="mode">
+          <option value="normal">一般辨識</option>
+          <option value="glare">眩光干擾</option>
+          <option value="recovery">眩光恢復</option>
+        </select>
+      </label>
+      <label>C 對比度 <span id="contrastValue">20%</span>
+        <input id="contrast" type="range" min="4" max="55" value="20" />
+      </label>
+      <label>C 大小 <span id="sizeValue">84 px</span>
+        <input id="size" type="range" min="38" max="150" value="84" />
+      </label>
+      <label>每回合題數
+        <select id="rounds">
+          <option>10</option>
+          <option selected>20</option>
+          <option>30</option>
+          <option>50</option>
+        </select>
+      </label>
+      <button id="startBtn" class="primary">開始練習</button>
+    </section>
+
+    <section class="viewer card" aria-label="模擬測驗視窗">
+      <div id="flashOverlay" class="flash-overlay"></div>
+      <div class="glare" aria-hidden="true">
+        <span class="led"></span><span class="led"></span>
+      </div>
+      <canvas id="target" width="600" height="360"></canvas>
+      <div id="prompt" class="prompt">按「開始練習」</div>
+    </section>
+
+    <section class="stats card">
+      <div><strong id="score">0 / 0</strong><span>正確</span></div>
+      <div><strong id="accuracy">—</strong><span>正確率</span></div>
+      <div><strong id="rt">—</strong><span>平均反應</span></div>
+    </section>
+
+    <section class="pad card" aria-label="方向作答">
+      <button data-dir="NW">↖</button><button data-dir="N">↑</button><button data-dir="NE">↗</button>
+      <button data-dir="W">←</button><button class="center" disabled>缺口方向</button><button data-dir="E">→</button>
+      <button data-dir="SW">↙</button><button data-dir="S">↓</button><button data-dir="SE">↘</button>
+    </section>
+
+    <section class="notes card">
+      <h2>使用方式</h2>
+      <ol>
+        <li>先在一般模式熟悉 C 字缺口的 8 個方向。</li>
+        <li>再切到「眩光干擾」，練習忽略左側強光、快速辨認右側目標。</li>
+        <li>「眩光恢復」會先短暫提高亮度，再出現低對比 C，模擬亮光後重新辨識目標。</li>
+        <li>電腦可用數字鍵盤 1–9（不含 5）或方向鍵；手機直接按方向按鈕。</li>
+        <li>正式補檢時，若使用漸進多焦鏡片，先確認測試距離與自己應該使用的鏡片區域。</li>
+      </ol>
+      <p>請不要把螢幕亮度調到造成刺眼或不舒服。這個網頁無法重現正式儀器的實際亮度、暗適應或光學條件。</p>
+    </section>
+  </main>
+<script src="app.js"></script>
+</body>
+</html>
