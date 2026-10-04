@@ -23,18 +23,19 @@
         </select>
       </label>
 
-      <label>對比參考 preset
-        <select id="presetContrast">
+      <label>難度預設
+        <select id="difficultyPreset">
           <option value="custom">自訂</option>
-          <option value="55">1:23（最容易）</option>
-          <option value="40">1:5</option>
-          <option value="28">1:2.7</option>
-          <option value="20" selected>1:2（最困難）</option>
+          <option value="2">極難（幾乎看不清）</option>
+          <option value="5" selected>很難（接近實際困難）</option>
+          <option value="10">中等</option>
+          <option value="18">較容易</option>
+          <option value="28">容易</option>
         </select>
       </label>
 
-      <label>C 對比 / 亮度 <span id="contrastValue">20</span>
-        <input id="contrast" type="range" min="8" max="70" value="20" />
+      <label>C 亮度 / 對比 <span id="contrastValue">5</span>
+        <input id="contrast" type="range" min="0" max="45" value="5" />
       </label>
 
       <label>C 大小 <span id="sizeValue">84 px</span>
@@ -92,11 +93,18 @@
     </section>
 
     <section class="notes card">
+      <h2>這版怎麼看難易度</h2>
+      <ul>
+        <li><strong>C 亮度 / 對比數值越低 → C 越暗 → 越難。</strong></li>
+        <li><strong>0</strong> 代表幾乎貼近黑背景，可能會難到連 C 在哪裡都不好找。</li>
+        <li><strong>5</strong> 是這版預設，故意比前一版暗很多。</li>
+        <li>如果覺得還不夠像實際體檢，就把亮度往 <strong>0–3</strong> 調，並搭配兩道中／高眩光。</li>
+      </ul>
       <h2>目前版本新增</h2>
       <ul>
         <li>可切換 0 / 1 / 2 道黃光眩光。</li>
-        <li>黃光燈具加上可見燈絲，故意做成容易誤導視線的形狀。</li>
-        <li>提供 4 組「標準化參考對比」preset：1:23、1:5、1:2.7、1:2。</li>
+        <li>黃光燈泡加大，燈絲改成更亮，並故意保留容易誤導視線的感覺。</li>
+        <li>用「極難 / 很難 / 中等 / 較容易 / 容易」取代不直觀的舊對比標示。</li>
         <li>保留自訂滑桿，可微調到更接近實際體檢的手感。</li>
       </ul>
       <h2>使用方式</h2>
@@ -107,7 +115,7 @@
         <li>電腦可用數字鍵盤 1–9（不含 5）或方向鍵；手機直接按方向按鈕。</li>
         <li>正式補檢時，若使用漸進多焦鏡片，先確認測試距離與自己應該使用的鏡片區域。</li>
       </ol>
-      <p class="fineprint">註：這些對比 preset 是為了提供「有依據的練習階梯」，不是宣稱台灣所有體檢院所都採相同數值。眩光強度的低／中／高也是螢幕上的相對模擬，並非真實 lux 校準。</p>
+      <p class="fineprint">註：眩光強度的低／中／高是螢幕上的相對模擬，並非真實 lux 校準。</p>
     </section>
   </main>
 <script src="app.js"></script>
