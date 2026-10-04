@@ -1,7 +1,7 @@
 const canvas = document.getElementById('target');
 const ctx = canvas.getContext('2d');
 const modeEl = document.getElementById('mode');
-const presetContrastEl = document.getElementById('presetContrast');
+const difficultyPresetEl = document.getElementById('difficultyPreset');
 const contrastEl = document.getElementById('contrast');
 const sizeEl = document.getElementById('size');
 const roundsEl = document.getElementById('rounds');
@@ -21,6 +21,15 @@ const dirs = ['N','NE','E','SE','S','SW','W','NW'];
 const angle = {E:0,SE:45,S:90,SW:135,W:180,NW:225,N:270,NE:315};
 let current = null, active = false, total = 0, correct = 0, maxRounds = 20, startedAt = 0, reaction = [];
 
+function difficultyText(v){
+  const n = Number(v);
+  if (n <= 2) return '極難';
+  if (n <= 5) return '很難';
+  if (n <= 10) return '中等';
+  if (n <= 18) return '較容易';
+  return '容易';
+}
+
 function resizeCanvas(){
   const r = canvas.getBoundingClientRect();
   const dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -37,8 +46,8 @@ function updateGlareUI(){
 }
 
 function applyPresetIfNeeded(){
-  if (presetContrastEl.value !== 'custom') {
-    contrastEl.value = presetContrastEl.value;
+  if (difficultyPresetEl.value !== 'custom') {
+    contrastEl.value = difficultyPresetEl.value;
   }
   updateLabels();
 }
@@ -53,15 +62,15 @@ function maybeGlareWash(){
   if (modeEl.value === 'normal' || count === 0) return;
 
   const r = canvas.getBoundingClientRect();
-  let alpha = 0.08;
-  if (glareLevelEl.value === 'medium') alpha = 0.12;
-  if (glareLevelEl.value === 'high') alpha = 0.18;
-  if (count === 2) alpha += 0.03;
+  let alpha = 0.10;
+  if (glareLevelEl.value === 'medium') alpha = 0.15;
+  if (glareLevelEl.value === 'high') alpha = 0.23;
+  if (count === 2) alpha += 0.05;
 
-  const grad = ctx.createRadialGradient(r.width * 0.16, r.height * 0.50, 12, r.width * 0.16, r.height * 0.50, r.width * 0.42);
-  grad.addColorStop(0, `rgba(255,220,130,${Math.min(alpha + 0.12, 0.35)})`);
-  grad.addColorStop(0.25, `rgba(255,205,95,${alpha})`);
-  grad.addColorStop(0.62, `rgba(255,195,70,${alpha * 0.42})`);
+  const grad = ctx.createRadialGradient(r.width * 0.16, r.height * 0.49, 12, r.width * 0.16, r.height * 0.49, r.width * 0.48);
+  grad.addColorStop(0, `rgba(255,225,135,${Math.min(alpha + 0.16, 0.42)})`);
+  grad.addColorStop(0.18, `rgba(255,205,90,${alpha})`);
+  grad.addColorStop(0.56, `rgba(255,188,60,${alpha * 0.50})`);
   grad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, r.width, r.height);
@@ -92,18 +101,18 @@ function draw(){
 }
 
 function updateLabels(){
-  contrastValue.textContent = contrastEl.value;
+  contrastValue.textContent = `${contrastEl.value}（${difficultyText(contrastEl.value)}）`;
   sizeValue.textContent = `${sizeEl.value} px`;
   updateGlareUI();
   draw();
 }
 
 contrastEl.addEventListener('input', () => {
-  presetContrastEl.value = 'custom';
+  difficultyPresetEl.value = 'custom';
   updateLabels();
 });
 sizeEl.addEventListener('input', updateLabels);
-presetContrastEl.addEventListener('change', applyPresetIfNeeded);
+difficultyPresetEl.addEventListener('change', applyPresetIfNeeded);
 glareCountEl.addEventListener('change', updateLabels);
 glareLevelEl.addEventListener('change', updateLabels);
 modeEl.addEventListener('change', updateLabels);
@@ -117,15 +126,15 @@ function next(){
     current = null;
     draw();
     updateGlareUI();
-    flash.style.opacity = glareCountEl.value === '0' ? '.18' : (glareLevelEl.value === 'high' ? '.92' : glareLevelEl.value === 'medium' ? '.72' : '.48');
+    flash.style.opacity = glareCountEl.value === '0' ? '.20' : (glareLevelEl.value === 'high' ? '.95' : glareLevelEl.value === 'medium' ? '.78' : '.54');
     setTimeout(() => {
       flash.style.opacity = '0';
       setTimeout(() => {
         current = dirs[Math.floor(Math.random() * dirs.length)];
         draw();
         startedAt = performance.now();
-      }, 680);
-    }, 650);
+      }, 760);
+    }, 700);
   } else {
     draw();
     startedAt = performance.now();
